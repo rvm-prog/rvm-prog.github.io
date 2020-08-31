@@ -1,0 +1,221 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial 
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Introduction - Article</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<h2>
+									<a href="index.html" class="logo"><strong>Datasets and r code</strong></a>
+									</h2>
+								</header>
+
+							<!-- Content -->
+								<section>
+									<header class="main">
+										<h2</h2>
+									</header>
+
+									<p>There are 3 libraries. 
+										
+									</p>
+									
+								 <h3>Libraries</h3>
+								 <pre>
+									 <code>
+# libraries used for the project
+
+library(survival)
+library(ggplot2)
+library(survminer)
+								 </code>
+								 </pre>
+
+
+								
+								
+									
+										
+								  <h3>R code window</h3>
+								
+									<p>There are 4 datasets. 
+										
+									</p>
+								  
+								 <pre>
+									 <code>
+# open r file with code for the datasets
+prostdata <- read.csv(file = "noCensored.csv", header = T, sep=",")										 
+prostdata <- read.csv(file = "Censored.csv", header = T, sep=",")
+dexa <- read.csv(file = "Dexamethason.csv", header = T, sep=",")
+MV <- read.csv(file = "AC-MV.csv", header = T, sep=",")
+									 </code>
+								 </pre>
+
+
+
+
+									<h3>Dataset example </h3>
+									
+									<p>As an example, a dataset is opened and the data for Kaplan-Meier curve 
+										are collected in a survival object.   
+										
+									</p>
+									
+									<pre>
+									  <code>
+# example of reading the Dexamethason dataset in r
+
+dexa <- read.csv(file = "Dexamethason.csv", header = T, sep=",")
+
+# variables in dataset dexamethason
+
+pts <- dexa$pts               # patients in the dataset
+fu <- dexa$fu                 # follow-up  
+events <- dexa$events         # death =1 alive = 0
+scenario <- dexa$scenario     # scenario R = dexa treatment, scenario C = control
+
+
+# scenario R = research arm, C = controle arm
+
+# construct the Kaplan-Meier curve
+surv_object <- Surv(time = fu , event = events)
+fit1 <- survfit(surv_object ~ scenario, data = dexa)
+summary(fit1)
+#																
+									  </code>
+									</pre>
+
+									<h3>Drawing survival curves using ggplot2 </h3>
+									
+									<p>The figures in the article are obtained by the ggsurvplot function.   
+									</p>
+									
+									<pre>
+									  <code>
+# ggsurvplot 
+j <- ggsurvplot(fit1, data = dexa,
+                xlim = c(0,30),
+                #conf.int = TRUE,
+                pval = TRUE, 
+                pval.method = TRUE, 
+                risk.table = "nrisk_cumcensor", 
+                legend.title = " ",
+                palette = c("darkblue", "darkred"),
+                tables.theme = theme_cleantable(), 
+                break.time.by = 7,
+                risk.table.fontsize = 5 ,
+                risk.table.height = 0.20, 
+                # surv.median.line = c("hv"), 
+                censor.shape = c("|"), 
+                censor.size = 6, 
+                axes.offset = FALSE, 
+                tables.y.text = FALSE)
+j				  
+									  </code>									  
+									</pre>
+									
+									<h3>The risk.table </h3>
+									
+									<p>To obtain the complete picture of the study, the risk table provide all necessary data.
+									So one has to choose one of these:   
+									</p>
+									
+									<pre>
+									  <code>
+# risk.table = "nrisk_cumcensor" 
+# risk.table = "nrisk_cumevents
+# risk.table = "nrisk_absolute" 
+# risk.table = "nrisk_percentage"
+									 </code>  
+									</pre>					
+									<hr class="major" />			
+									<header id="header">
+									<a href="index.html" class="logo"><strong>Download the datasets and r code</strong></a>
+									<ul class="icons">
+										<li><a href="https://github.com/rvm-prog/KM-plots" class="icon brands fa-github"><span class="label">Github</span></a></li>
+									</ul>
+									</header>	
+								
+
+									
+									
+										
+									<h2 id = "Down"> Download</h2>
+									<p> The R files and datasets from the 
+										<a href="https://github.com/rvm-prog/KM-plots">Github Repository</a>.<br>
+										On the Github repository page, select the <strong>Green</strong> Code button. <br>
+										After downloading the Zip file, you will find the " KM plots-master.zip"in your download folder.
+									</p>
+									
+									
+									<hr class="major" />
+
+									
+						</section>
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Search -->
+								
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Start</a></li>
+										<li><a href="generic.html">Article</a></li>
+										<li><a href="generic.html#Summ">Summary</a></li>
+										<li><a href="generic.html#Ref">References</a></li>
+										<li><a href="Code.html">R code and Datasets</a></li>
+									</ul>
+									
+								</nav>
+								
+
+							<!-- Section -->
+								<section>
+									
+								</section>
+
+							<!-- Section -->
+								
+							<!-- Footer -->
+								
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
